@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" id="main" />
+    <title>Quest</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="main-css.css" />
+    <script src="jquery.js"></script>
+    <script src="openai-test.js"></script>
+    <script>
+        
+
+        // Add a DOMContentLoaded event listener
+        document.addEventListener("DOMContentLoaded", function () {
+            // Define the API URL and API key
+            const apiUrl =
+                "http://api.weatherapi.com/v1/current.json?key=d60caba84cdd484c9a4215845241201&q=Toronto&aqi=no";
+
+            // Get the HTML element
+            const htmlElement = document.getElementById("weather");
+
+            // Make a GET request
+            fetch(apiUrl)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    // Set the text content of the HTML element to the API data
+                    htmlElement.textContent = `The current temperature in Toronto is ${data.current.temp_c}°C.`;
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+
+            $("document").ready(function () {
+                $("#main-header").hide();
+                $("#main-header").show("slow");
+                $("#lm").click(lightMode);
+
+                function lightMode() {
+                    $("#bodytemp").css("background-color", "white");
+                    $("#1").css("color", "black");
+                    $("#lm").css("color", "black");
+                }
+            });
+        });
+    </script>
+</head>
+<header id="main-header">
+    <h1>Quest</h1>
+    <nav>
+        <button onclick="window.location.href='main.html'" class="button-shrink">
+            Home
+        </button>
+        <button onclick="window.location.href='signup.html'" class="button-shrink">
+            Sign Up
+        </button>
+        <button id="lm" class="button-shrink">Light Mode</button>
+    </nav>
+</header>
+
+<body>
+    <div class="form-box">
+        <h1>Welcome to Quest</h1>
+        <br />
+        <p>A new innovative way to make money doing what you love!</p>
+        <span id="weather"></span>
+    </div>
+    <div class="apis">
+        <p id="time"></p>
+        <p id="ai"></p>
+        <p id="movies"></p>
+        <p id="nasa"></p>
+        <p id="maps"></p>
+    </div>
+</body>
+
+</html>
